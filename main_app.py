@@ -26,7 +26,7 @@ async def shut_url_post(request):
     return web.Response(text=str(url_record.inserted_id))
 
 
-async def handle(request):
+async def handler(request):
     name_url = request.match_info.get('name')
     try:
         database = request.app["db"]
@@ -38,12 +38,10 @@ async def handle(request):
     return web.HTTPFound('http://'+select_url)
 
 
-
-
 db = asyncio.run(setup_db())
 app = web.Application()
 app.add_routes([web.get('/', shut_url_get),
-                web.get('/{name}', handle),
+                web.get('/{name}', handler),
                 web.post('/', shut_url_post)])
 
 app["db"] = db
