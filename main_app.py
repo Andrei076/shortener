@@ -28,13 +28,10 @@ async def shut_url_post(request):
 
 async def handler(request):
     name_url = request.match_info.get('name')
-    try:
-        database = request.app["db"]
-        collection = database['shortener']
-        find_url = await collection.find_one({"id": ObjectId(name_url)})
-        select_url = find_url['user_url']
-    except BaseException as error:
-        return web.Response(text=str(error))
+    database = request.app["db"]
+    collection = database['shortener']
+    find_url = await collection.find_one({"_id": ObjectId(name_url)})
+    select_url = find_url['user_url']
     return web.HTTPFound('http://'+select_url)
 
 
