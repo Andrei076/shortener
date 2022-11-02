@@ -10,4 +10,3 @@ async def setup_db():
     client = motor.motor_asyncio.AsyncIOMotorClient(f"mongodb://{username}:{password}@{host}:{port}")
     db = client['async_db']
     return db
-
